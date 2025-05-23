@@ -28,7 +28,29 @@ if "main" not in weather_data or "weather" not in weather_data:
 temp = weather_data["main"]["temp"]
 desc = weather_data["weather"][0]["description"].title()
 humidity = weather_data["main"]["humidity"]
-message = f"{desc}, {temp}°C, Humidity: {humidity}%"
+# Optional emoji mapping for weather types
+weather_icons = {
+    "Clear": "☀️",
+    "Clouds": "☁️",
+    "Rain": "🌧️",
+    "Thunderstorm": "⛈️",
+    "Drizzle": "🌦️",
+    "Snow": "❄️",
+    "Mist": "🌫️",
+    "Fog": "🌁",
+    "Haze": "🌤️"
+}
+
+# Get the main weather condition
+condition_main = weather_data["weather"][0]["main"]
+icon = weather_icons.get(condition_main, "🌍")  # fallback emoji
+
+message = f"""```diff
+- Weather Update for {city}
++ Condition: {desc} {icon}
++ Temperature: {temp}°C
++ Humidity: {humidity}%
+```"""
 
 # Send to BotGhost webhook
 payload = {
