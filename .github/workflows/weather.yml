@@ -2,27 +2,23 @@ name: Weather to Discord
 
 on:
   schedule:
-    - cron: '0 * * * *'  # every hour
+    - cron: '0 * * * *'
   workflow_dispatch:
 
 jobs:
   send-weather:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v3
-
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.x'
-
-      - name: Install dependencies
-        run: pip install requests
-
-      - name: Run weather script
+      - name: Install dependencies and run script
         env:
           OWM_API_KEY: ${{ secrets.OWM_API_KEY }}
           BGH_API_KEY: ${{ secrets.BGH_API_KEY }}
           WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
-        run: python weather.py
+        run: |
+          pip install requests
+          python weather.py
