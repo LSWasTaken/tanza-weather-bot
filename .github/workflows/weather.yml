@@ -22,5 +22,7 @@ jobs:
 
       - name: Run weather script
         env:
-          OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
+          OWM_API_KEY: ${{ secrets.OWM_API_KEY }}
+          BGH_API_KEY: ${{ secrets.BGH_API_KEY }}
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
         run: python weather.py
