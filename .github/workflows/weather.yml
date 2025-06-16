@@ -1,0 +1,29 @@
+name: 🕒 Weather Bot Schedule
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'  # Every 30 minutes UTC
+  workflow_dispatch:
+
+jobs:
+  run-weather-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run bot
+        env:
+          WEBHOOK_URL: ${{ secrets.WEBHOOK_URL }}
+          WEATHER_API_KEY: ${{ secrets.WEATHER_API_KEY }}
+          LOCATION: 'Tanza,PH'
+        run: python weather_bot.py
